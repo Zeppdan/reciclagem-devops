@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: reciclagem-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: reciclagem-app:latest
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_PROFILES_ACTIVE: docker
+    restart: unless-stopped
+    networks:
+      - reciclagem-network
+
+networks:
+  reciclagem-network:
+    driver: bridge
